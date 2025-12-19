@@ -1,0 +1,69 @@
+grid:
+  divisors: [4, 8, 12, 16, 24, 32]
+  division_codes:
+    quarter: 0
+    eighth: 1
+    twelvth: 2
+    sixteenth: 3
+    twentyfourth: 4
+    thirtysecond: 5
+  frac24_indices_16th: [0, 6, 12, 18]
+  legal_frac24: [0, 3, 4, 6, 8, 9, 12, 15, 16, 18, 20, 21]
+
+  division_penalties:
+    quarter: 0.0
+    eighth: 0.1
+    twelvth: 0.5
+    sixteenth: 0.2
+    twentyfourth: 0.6
+    thirtysecond: 0.7
+  label_tolerance_ms: 5.0
+
+paths:
+  model_dir: models
+  ticks_dir: data/mapdata
+  ticks_vis_dir: data/mapdata_vis
+  dataset_dir: dataset
+  outputs_dir: outputs
+  maplist_path: maplist_aff.txt
+  gan_data_dir: data/gan
+  gan_real_data: data/gan/gan.npz
+  gan_vis_dir: data/gan_vis
+  mapthis_dir: data/mapthis
+  mapthis_vis_dir: data/mapthis_vis
+  rhythm_dir: data/rhythm
+  rhythm_vis_dir: data/rhythm_vis
+
+models:
+  grid_divisor: grid_divisor_model.keras
+  note_classifier: note_classifier_model.keras
+  gan_generator: gan_generator.keras
+  gan_discriminator: gan_discriminator.keras
+
+train:
+  default_device: auto
+  note_classifier:
+    epochs: 5
+    batch_size: 64
+    optimizer: adam
+    lr: 0.0001
+    nonzero_count_weight: 10
+
+  gan:
+    epochs: 1000
+    batch_size: 32
+    latent_dim: 64
+    optimizer: adam
+    lr: 0.0002
+
+inference:
+  note_classifier:
+    type_thresholds:
+      tap: 0.0001
+      hold: 0.0001
+      arcfalse0: 0.0001
+      arcfalse1: 0.0001
+      arctrue: 0.0001
+      arctap: 0.0001
+    in_arc_threshold: 0.0001
+    in_hold_threshold: 0.0001
